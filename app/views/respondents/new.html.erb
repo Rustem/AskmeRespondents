@@ -1,0 +1,21 @@
+<h1>new respondent</h1>
+
+<%= form_tag(respondents_url, :method => "post") do %>
+  <fieldset>
+	  <ol>
+	  	<li>
+	    	<label>Username </label>
+	    	<input type='text' name="user[username]" value="<%= @user.username%>"/>
+	  	</li>
+
+	  	<li>
+		    <label>Email</label>
+		    <input type='text' name="user[email]" value="<%= @user.email %>"/>
+	  	</li>
+	  	<li>
+	    	<input type="submit" value="Post" />
+	  	</li>
+	  </ol>
+  </fieldset>
+<% end %>
+

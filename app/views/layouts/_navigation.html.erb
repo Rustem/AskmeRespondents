@@ -1,0 +1,22 @@
+<%= link_to 'Askme.kz', root_path %>
+
+<ul class="nav">
+	<% if respondent_signed_in? %>
+		<li>
+			<%= link_to('Logout', destroy_respondent_session_path, :method=>'delete') %>
+		</li>
+	<% else %>
+		<li>
+			<%= link_to('Sign in', new_respondent_session_path) %>
+		</li>
+	<% end %>
+	<% if respondent_signed_in? %>
+		<li>
+			<%= link_to 'Edit account', edit_respondent_registration_path %>
+		</li>
+	<% else %>
+		<li>
+			<%= link_to('Sign up', new_respondent_registration_path) %>
+		</li>
+	<% end %>
+</ul>
