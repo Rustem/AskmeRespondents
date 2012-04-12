@@ -1,27 +1,14 @@
-<%= form_for(@respondent) do |f| %>
-  <% if @respondent.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@respondent.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @respondent.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
 
-  <p>
-    <%= f.label :firstname %><br />
-    <%= f.text_field :firstname %>
-  </p>
-  <p>
-    <%= f.label :lastname %><br />
-    <%= f.text_field :lastname %>
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>
-
-<% end %>
+  <dl class="tabs">
+	  <dd><a href="#simple1" class="active">General Settings</a></dd>
+	  <dd><a href="#simple2">Social-Demographic</a></dd>
+	  <dd><a href="#simple3">Business</a></dd>
+	  <dd><a href="#simple3">Map of Wishes</a></dd>
+  </dl>
+  <ul class="tabs-content">
+	  <li class="active" id="simple1Tab"><%= render 'general_settings' %></li>
+	  <li id="simple2Tab"><%= render 'social_demographic' %></li>
+	  <li id="simple3Tab">This is simple tab 3's content. It's, you know...okay.</li>
+  </ul>
+  

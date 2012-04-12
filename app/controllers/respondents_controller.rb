@@ -39,7 +39,9 @@ class RespondentsController < ApplicationController
 	def update
 		@respondent = Respondent.find_by_id(params[:id])
 		respond_to do |format|
-	      if @respondent.update_attributes(params[:respondent])
+	      if @respondent.set(params[:respondent])
+	    	@respondent.reload
+	    	# raise p Respondent.find_by_id(@respondent.id).inspect
 	        format.html { redirect_to @respondent, notice: 'Your profile was successfully updated.' }
 	        format.json { head :no_content }
 	      else
@@ -47,6 +49,21 @@ class RespondentsController < ApplicationController
 	        format.json { render json: @respondent.errors, status: :unprocessable_entity }
 	      end
 	    end
-	    @respondent.save
 	end
+
+	def social_demographic_settings
+		@respondent = current_respondent
+		
+		respond_to do |format|
+	      if @respondent.set(params[:respondent])
+	    	@respondent.reload
+	    	# raise p Respondent.find_by_id(@respondent.id).inspect
+	        format.html { redirect_to @respondent, notice: 'Your profile was successfully updated.' }
+	        format.json { head :no_content }
+	      else
+	        format.html { render action: "edit" }
+	        format.json { render json: @respondent.errors, status: :unprocessable_entity }
+	      end
+	    end
+	end		
 end

@@ -1,5 +1,14 @@
 class Respondents::RegistrationsController < Devise::RegistrationsController
-  def after_sign_up_path_for(resource)
-    "/users/#{current_user.id.to_s}/edit"
-  end
+  after_filter :create_default_profile, :only => [:create]
+
+  def create_default_profile
+  	# default profile empty
+  	profile = Profile.new
+  	current_respondent.profile = profile
+  end  	
+
+   protected
+	  def after_sign_up_path_for(resource)
+	    "/respondents/#{current_respondent.id.to_s}/edit"
+	  end
 end	

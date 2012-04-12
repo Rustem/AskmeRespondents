@@ -1,0 +1,11 @@
+<%= form_tag(sd_respondent_profile_path(current_respondent.profile.id)) do  %>
+  
+  
+   
+        <label>age </label>
+        <input type='text' name="social_demographic[age]" value=""/>
+     
+  <p>
+    <%= button_to 'submit' %>
+  </p>
+<% end %>

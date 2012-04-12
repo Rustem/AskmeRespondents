@@ -15,7 +15,11 @@ AskmeModel::Application.routes.draw do
   devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations" }
 
   resources :respondents do
-      
+      resources :profiles do
+        member do
+          post 'social_demographic_settings', :as => :sd
+        end          
+      end
   end    
 
 
@@ -55,8 +59,9 @@ AskmeModel::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
-  root :to => 'respondents#index'
 
+  root :to => 'respondents#index'
+ 
   # match '/signin' => 
   # See how all your routes lay out with "rake routes"
 
@@ -64,4 +69,5 @@ AskmeModel::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
   match 'profile' => 'respondents#show'
+
 end
