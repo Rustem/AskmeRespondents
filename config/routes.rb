@@ -69,5 +69,6 @@ AskmeModel::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
   match 'profile' => 'respondents#show'
-
+  #match '/:slug' => 'respondents#show'
+  match ':controller/:id/:action' => ':controller/:slug/:action'
 end

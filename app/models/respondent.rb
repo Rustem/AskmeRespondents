@@ -14,6 +14,8 @@ class Respondent
   key :city, String
   key :phone_number, String
 
+  key :slug, String
+
   # trackable
   key :sign_in_count, Integer, :default => 0
   key :current_sign_in_at, Time
@@ -28,11 +30,19 @@ class Respondent
   key :reset_password_token, String
 
   #associations
-  one :profile
+  one :profile, :dependent => :destroy
 
-  attr_accessible :username, :email, :password, :password_confirmation, :created_at, :updated_at
+  attr_accessible :username, :email, :password, :password_confirmation, :created_at, :updated_at, :slug
 
   validates_presence_of  :email
   validates_uniqueness_of :email
 
+  scope :by_slug,  lambda { |slug| 
+    where :slug => slug
+  }
+
+  def slug
+    a = self.email.split('@')
+    a[0]
+  end
 end

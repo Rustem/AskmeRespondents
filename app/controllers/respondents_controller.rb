@@ -2,6 +2,7 @@ class RespondentsController < ApplicationController
 	before_filter :authenticate_respondent!, :except => [:index]
 	def index
 		@users = Respondent.all
+		#raise p Respondent.first.slug.inspect
 	end		
 
 	def new

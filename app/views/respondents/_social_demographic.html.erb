@@ -1,9 +1,12 @@
-<%= form_tag(sd_respondent_profile_path(current_respondent.profile.id)) do  %>
+<!-- sd_respondent_profile_path takes two parameters: current respondent id and it's profile id to edit -->
+<%= form_tag(sd_respondent_profile_path(current_respondent.id, current_respondent.profile.id)) do  %>
   
   
    
         <label>age </label>
-        <input type='text' name="social_demographic[age]" value=""/>
+        <input type='text' name="social_demographic[age]" value=""/><br />
+        <label>race </label>
+        <input type='text' name="social_demographic[race]" value=""/>
      
   <p>
     <%= button_to 'submit' %>
