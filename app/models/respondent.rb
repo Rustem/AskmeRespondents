@@ -45,4 +45,8 @@ class Respondent
     a = self.email.split('@')
     a[0]
   end
+
+  def to_param
+    "#{slug}"
+  end
 end

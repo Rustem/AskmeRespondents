@@ -14,12 +14,17 @@ AskmeModel::Application.routes.draw do
   #   resources :products
   devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations" }
 
+   match 'profile' => 'respondents#show'
+  #match '/:slug' => 'respondents#show'
+  match 'profile/edit/' => 'respondents#edit#:id', :as => "pr_edit"
+
   resources :respondents do
-      resources :profiles do
-        member do
-          post 'social_demographic_settings', :as => :sd
-        end          
-      end
+    resources :profiles do
+      member do
+        post 'social_demographic_settings', :as => :sd
+        post 'business_settings', :as => :business
+      end          
+    end
   end    
 
 
@@ -68,7 +73,5 @@ AskmeModel::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-  match 'profile' => 'respondents#show'
-  #match '/:slug' => 'respondents#show'
-  match ':controller/:id/:action' => ':controller/:slug/:action'
+ 
 end

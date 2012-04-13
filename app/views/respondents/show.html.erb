@@ -5,4 +5,6 @@
 <p><b>City: </b> <%= @respondent.city %></p>
 <p><b>Phone number: </b> <%= @respondent.phone_number %></p>
 
-<%= link_to 'Edit me', edit_respondent_path(current_respondent.id) %>
+<%= #link_to 'Edit me', edit_respondent_path(current_respondent.id) 
+	link_to 'Edit me', pr_edit_path
+%>

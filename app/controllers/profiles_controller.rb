@@ -26,8 +26,6 @@ class ProfilesController < ApplicationController
 	def social_demographic_settings
 		profile = current_respondent.profile
 		@sd = profile.social_demographic
-		#raise p current_respondent.inspect
-		#raise p @sd.inspect
 		@respondent = current_respondent
 			#
 			profile.social_demographic.parameters = params[:social_demographic]
@@ -37,5 +35,18 @@ class ProfilesController < ApplicationController
 	        redirect_to current_respondent
 	        #format.json { head :no_content }
 	    
+	end		
+
+	def business_settings
+		profile = current_respondent.profile
+		@sd = profile.social_demographic
+		@respondent = current_respondent
+		
+		profile.business.parameters = params[:business]
+			profile.save
+			#raise p profile.inspect
+			# raise p Respondent.find_by_id(@respondent.id).inspect
+	        redirect_to current_respondent
+	        #format.json { head :no_content }
 	end		
 end
