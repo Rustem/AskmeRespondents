@@ -14,7 +14,7 @@ AskmeModel::Application.routes.draw do
   #   resources :products
   devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations" }
 
-   match 'profile' => 'respondents#show'
+  match 'profile' => 'respondents#show'
   #match '/:slug' => 'respondents#show'
   match 'profile/edit/' => 'respondents#edit#:id', :as => "pr_edit"
 
@@ -25,7 +25,12 @@ AskmeModel::Application.routes.draw do
         post 'business_settings', :as => :business
       end          
     end
-  end    
+  end
+
+
+#this is just for testing, need to be deleted
+  match 'survey' => 'fakeQuestions#index', :as => 'survey'
+  match 'submitAnswers' => 'fakeQuestions#submitAnswers', :as => 'sa'
 
 
   # Sample resource route with options:
@@ -65,7 +70,7 @@ AskmeModel::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
 
-  root :to => 'respondents#index'
+  root :to => 'application#index'
  
   # match '/signin' => 
   # See how all your routes lay out with "rake routes"
