@@ -11,13 +11,21 @@ class FakeQuestionsController < ApplicationController
 	end
 
 	def submitAnswers
+		#raise p params.inspect
 		respond = Respond.new()
+		respond.user = current_respondent.id unless current_respondent.nil?
 		params.each do |key, value|
+			if (key.to_s.starts_with? 'q_')
+				answer = Answer.new()
+				answer.question_id = key.to_s[2..key.to_s.length-1]
+				answer.value = value
+				respond.answers.push(answer) 
+			end 
 		end
-		if @user.save!
-			redirect_to root_url
+		if respond.save!
+		 	redirect_to root_url
 		else			
-			render :action => :new
+		 	render :action => :index
 		end
 	end
 end

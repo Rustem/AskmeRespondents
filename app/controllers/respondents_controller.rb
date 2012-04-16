@@ -39,7 +39,6 @@ class RespondentsController < ApplicationController
 	# update profile
 	def update
 		@respondent = Respondent.find_by_slug(params[:id])
-
 		respond_to do |format|
 	      if @respondent.set(params[:respondent])
 	    	@respondent.reload

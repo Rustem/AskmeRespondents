@@ -13,6 +13,7 @@ AskmeModel::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
   devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations" }
+  devise_for :responds, :controller => "fake_questions"
 
   match 'profile' => 'respondents#show'
   #match '/:slug' => 'respondents#show'
@@ -28,10 +29,11 @@ AskmeModel::Application.routes.draw do
   end
 
 
-#this is just for testing, need to be deleted
-  match 'survey' => 'fakeQuestions#index', :as => 'survey'
+
+#this is just for testing, need to be delete'
   match 'submitAnswers' => 'fakeQuestions#submitAnswers', :as => 'sa'
 
+resources :surveys
 
   # Sample resource route with options:
   #   resources :products do
