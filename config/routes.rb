@@ -3,13 +3,18 @@ AskmeModel::Application.routes.draw do
 
   devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations", :omniauth_callbacks => "respondents/omniauth_callbacks" }
 
+  #match '/:slug' => 'respondents#show'
+  match 'profile/edit/' => 'respondents#edit#:id', :as => "pr_edit"
+
   resources :respondents do
-      resources :profiles do
-        member do
-          post 'social_demographic_settings', :as => :sd
-        end          
-      end
+    resources :profiles do
+      member do
+        post 'social_demographic_settings', :as => :sd
+        post 'business_settings', :as => :business
+      end          
+    end
   end    
+
 
   match 'profile' => 'respondents#show'
 
@@ -67,7 +72,6 @@ AskmeModel::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
 
-
  
   # match '/signin' => 
   # See how all your routes lay out with "rake routes"
@@ -75,5 +79,4 @@ AskmeModel::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-
 end

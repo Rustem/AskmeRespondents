@@ -14,6 +14,8 @@ class Respondent
   key :city, String
   key :phone_number, String
 
+  key :slug, String
+
   # trackable
   key :sign_in_count, Integer, :default => 0
   key :current_sign_in_at, Time
@@ -28,20 +30,44 @@ class Respondent
   key :reset_password_token, String
 
   #associations
-  one :profile
+  one :profile, :dependent => :destroy
 
-  attr_accessible :username, :email, :password, :password_confirmation, :created_at, :updated_at
+  attr_accessible :username, :email, :password, :password_confirmation, :created_at, :updated_at, :slug
 
   validates_presence_of  :email
   validates_uniqueness_of :email
 
+  scope :by_slug,  lambda { |slug| 
+    where(:slug => slug).first
+  }
 
-  def self.create_with_omniauth(auth)
-    create! do |r|
-      r.provider = auth["provider"]
-      r.uid = auth["uid"]
-      r.name = auth["info"]["name"]
-    end
+  def convert_to_slug(emailPrefix)
+     if defined?(ActiveSupport::Inflector.parameterize)
+       ActiveSupport::Inflector.parameterize(emailPrefix).to_s
+     end       
+     emailPrefix.downcase.gsub!(/[\W]/, '_') {|match| emailPrefix = match}
+  end    
+
+  def generate_slug
+    return if self.email.blank?
+    tail, int = "", 1
+    a = self.email.split('@')
+    initial = convert_to_slug(a[0])
+    
+    objectResp = Respondent.find_by_slug(initial + tail)
+    p objectResp.inspect
+     if !objectResp.nil?
+       objectResp.each do 
+         int  += 1
+         tail = "-#{int}"
+       end
+     end
+    return initial + tail
+  end
+
+
+  def to_param
+    "#{slug}"
   end
 
 end

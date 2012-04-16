@@ -1,10 +1,13 @@
 class RespondentsController < ApplicationController
 	before_filter :authenticate_respondent!, :except => [:index]
+
 	def index
 		@users = Respondent.all
 
 		omniauth = request.env["omniauth.auth"]
 		log omniauth.nil?
+		#raise p Respondent.first.slug.inspect
+
 	end		
 
 	def new
@@ -13,7 +16,6 @@ class RespondentsController < ApplicationController
 
 	def show
 		@respondent ||= current_respondent
-
 	end
 
 	def create
@@ -35,12 +37,13 @@ class RespondentsController < ApplicationController
 	end		
 
 	def edit
-		@respondent = Respondent.find_by_id(params[:id])
+		@respondent ||= current_respondent#Respondent.find_by_id(params[:id])
+		@profile ||= @respondent.profile
 	end
 
 	# update profile
 	def update
-		@respondent = Respondent.find_by_id(params[:id])
+		@respondent = Respondent.find_by_slug(params[:id])
 		respond_to do |format|
 	      if @respondent.set(params[:respondent])
 	    	@respondent.reload
@@ -53,20 +56,4 @@ class RespondentsController < ApplicationController
 	      end
 	    end
 	end
-
-	def social_demographic_settings
-		@respondent = current_respondent
-		
-		respond_to do |format|
-	      if @respondent.set(params[:respondent])
-	    	@respondent.reload
-	    	# raise p Respondent.find_by_id(@respondent.id).inspect
-	        format.html { redirect_to @respondent, notice: 'Your profile was successfully updated.' }
-	        format.json { head :no_content }
-	      else
-	        format.html { render action: "edit" }
-	        format.json { render json: @respondent.errors, status: :unprocessable_entity }
-	      end
-	    end
-	end		
 end
