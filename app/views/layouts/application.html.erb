@@ -22,12 +22,13 @@
 		<div id="headers" style="background: #222; border-bottom: solid 4px #00A5FF; padding: 15px 20px 13px 20px;" class="container">
 			<%= render 'layouts/navigation' %>
 		</div>
-		<div class="row">
-			<div class="six columns"><%= yield %></div>
-			<div class="six columns"><h2> content </h2></div>
-		</div>
 	</div>
 	
+		<div class="row">
+			<div class="six columns"><%= yield %></div>
+			<div class="six columns">Here is another block</div>
+		</div>
+	</div>
 
 </body>
 </html>

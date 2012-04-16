@@ -1,0 +1,11 @@
+<br/>
+<p><b>Username: </b> <%= @respondent.username %></p>
+<p><b>Email: </b> <%= @respondent.email %></p>
+<p><b>Firstname: </b> <%= @respondent.firstname %></p>
+<p><b>Lastname: </b> <%= @respondent.lastname %></p>
+<p><b>City: </b> <%= @respondent.city %></p>
+<p><b>Phone number: </b> <%= @respondent.phone_number %></p>
+
+<%= #link_to 'Edit me', edit_respondent_path(current_respondent.id) 
+	link_to 'Edit me', pr_edit_path
+%>

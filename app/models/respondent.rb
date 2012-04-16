@@ -66,7 +66,6 @@ class Respondent
   end
 
 
-
   def to_param
     "#{slug}"
   end

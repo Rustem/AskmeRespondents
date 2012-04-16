@@ -21,7 +21,7 @@ class Respondents::RegistrationsController < Devise::RegistrationsController
     else 
       raise p 'Registration_Controller exception while updating slug'
     end
-  end
+  end  	
 
    protected
 	  def after_sign_up_path_for(resource)

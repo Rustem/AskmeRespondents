@@ -1,0 +1,25 @@
+	
+
+<div class="row">
+	<div class="four columns">
+		<h1 style="font-size: 1.6rem; font-weight: 800; color: white; white">
+			<%= link_to 'Askme.kz', root_path %>
+		</h1>
+	</div>
+	<div class="eight columns">
+		<strong style="display: block; position: relative; bottom: 4px; line-height: 14px; margin: 0;  padding: 0; padding-left: 5px; float: right;">
+			
+			<% if respondent_signed_in? %>
+					<%= link_to 'Change password or email', edit_respondent_registration_path, :class=>'small blue nice button' %>
+			<% else %>
+					<%= link_to('Sign up', new_respondent_registration_path) %>
+			<% end %>
+			<% if respondent_signed_in? %>
+					<%= link_to('Logout', destroy_respondent_session_path, :method=>'delete') %>
+			<% else %>
+					<%= link_to('Sign in', new_respondent_session_path) %>
+			<% end %>
+		</strong>
+	</div>
+	
+</div>

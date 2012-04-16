@@ -11,6 +11,7 @@
  *= require_self
  *= require_tree .
 */
+<<<<<<< HEAD
 h1 {
 	color: white;
 }
@@ -18,3 +19,5 @@ h1 {
 	color: white;
 	font-weight: bold;
 }
+=======
+>>>>>>> 801ff7f8e3389eccae85fdff5302a63b1a5f82d0
