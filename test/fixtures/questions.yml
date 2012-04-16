@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: 
+  help_text: 
+  question_number: 
+  is_required: 
+  is_shuffled: 
+
+two:
+  title: 
+  help_text: 
+  question_number: 
+  is_required: 
+  is_shuffled: 
