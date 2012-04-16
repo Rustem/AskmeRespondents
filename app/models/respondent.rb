@@ -47,21 +47,17 @@ class Respondent
      end       
      emailPrefix.downcase.gsub!(/[\W]/, '_') {|match| emailPrefix = match}
   end    
-
+# correct objectResp is not Enumerable
   def generate_slug
     return if self.email.blank?
     tail, int = "", 1
     a = self.email.split('@')
     initial = convert_to_slug(a[0])
     
-    objectResp = Respondent.find_by_slug(initial + tail)
-    p objectResp.inspect
-     if !objectResp.nil?
-       objectResp.each do 
+    while Respondent.find_by_slug(initial + tail)
          int  += 1
          tail = "-#{int}"
-       end
-     end
+    end
     return initial + tail
   end
 
