@@ -1,9 +1,9 @@
 class Respondent
   include MongoMapper::Document
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
+  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :, :omniauthable
   devise :database_authenticatable, :registerable, :timeoutable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
 
   key :username, String
@@ -34,5 +34,14 @@ class Respondent
 
   validates_presence_of  :email
   validates_uniqueness_of :email
+
+
+  def self.create_with_omniauth(auth)
+    create! do |r|
+      r.provider = auth["provider"]
+      r.uid = auth["uid"]
+      r.name = auth["info"]["name"]
+    end
+  end
 
 end

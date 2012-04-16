@@ -9,6 +9,6 @@ class Respondents::RegistrationsController < Devise::RegistrationsController
 
    protected
 	  def after_sign_up_path_for(resource)
-	    "/respondents/#{current_respondent.id.to_s}/edit"
+	    "/respondents/#{current_respondent.id}/edit"
 	  end
 end	

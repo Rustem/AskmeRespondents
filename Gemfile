@@ -6,6 +6,13 @@ gem 'rails', '3.2.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 
+group :development, :test do
+	gem 'rspec-rails'
+end
+
+group :test do
+	gem 'database_cleaner'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -20,6 +27,8 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+gem 'omniauth-vkontakte'
 
 # mongo and ORM and bson
 gem 'mongo'

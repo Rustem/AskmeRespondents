@@ -2,6 +2,9 @@ class RespondentsController < ApplicationController
 	before_filter :authenticate_respondent!, :except => [:index]
 	def index
 		@users = Respondent.all
+
+		omniauth = request.env["omniauth.auth"]
+		log omniauth.nil?
 	end		
 
 	def new

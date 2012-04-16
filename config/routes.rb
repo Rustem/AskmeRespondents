@@ -1,4 +1,21 @@
 AskmeModel::Application.routes.draw do
+  root :to => 'respondents#index'
+
+  devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations", :omniauth_callbacks => "respondents/omniauth_callbacks" }
+
+  resources :respondents do
+      resources :profiles do
+        member do
+          post 'social_demographic_settings', :as => :sd
+        end          
+      end
+  end    
+
+  match 'profile' => 'respondents#show'
+
+
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -12,16 +29,6 @@ AskmeModel::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations" }
-
-  resources :respondents do
-      resources :profiles do
-        member do
-          post 'social_demographic_settings', :as => :sd
-        end          
-      end
-  end    
-
 
   # Sample resource route with options:
   #   resources :products do
@@ -60,7 +67,7 @@ AskmeModel::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
 
-  root :to => 'respondents#index'
+
  
   # match '/signin' => 
   # See how all your routes lay out with "rake routes"
@@ -68,6 +75,5 @@ AskmeModel::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-  match 'profile' => 'respondents#show'
 
 end
