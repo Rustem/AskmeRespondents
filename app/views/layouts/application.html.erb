@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AskmeModel</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+	<div class="container" style="margin:0; padding:0;">
+		<div class="row">
+			<div class="twelve columns">
+				<header>
+					<%= render 'layouts/navigation' %>
+				</header>		
+			</div>
+		</div>
+		<div class="row">
+			<div class="six columns"><%= yield %></div>
+			<div class="six columns"><h2> content </h2></div>
+		</div>
+	</div>
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!-- resource_name is respondent -->
+<h2>Sign up</h2>
+<h1><%= registration_path(resource_name) %></h1>
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email %></div>
+
+  <div><%= f.label :password %><br />
+  <%= f.password_field :password %></div>
+
+  <div><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></div>
+
+  <div class="buttons">
+  	<%= f.submit "Sign up" %>
+  </div>
+<% end %>
+<div>
+	<%= button_to('Connect vkontakte.ru', 'vkontakte_welcome_path')  %>
+	<%= button_to('Connect facebook', 'facebook_welcome_path') %>
+	<%= button_to('Linked in', 'linkedin_welcome_path') %>
+</div>
+<%= render "links" %>
