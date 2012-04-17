@@ -1,15 +1,32 @@
 class Respondents::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     omniauth = request.env["omniauth.auth"]
+    
+    email = omniauth.info.email.to_s.downcase
 
-    p omniauth
+    if r = Respondent.where(email: email).first
+      # try to SIGN IN
+      
+      if r.include_omniauth omniauth
+          # facebook CONNECTED
+      else
+          # facebook NOT CONNECTED
+      end
 
-    email = omniauth.extra.raw_info.email
+      # update user profile
+      #r.update_omniauth omniauth
 
-    r = Respondent.find(email: email)
+      sign_in(:respondent, r) and redirect_to pr_edit_path
+    else
+      # respondent should SIGN UP
 
-    render :text => r
-    return
+      r = Respondent.create(email: email, password: SecureRandom.base64(12))
+      #r.update_omniauth omniauth
+
+      sign_in(:respondent, r) and redirect_to pr_edit_path
+    end
+
+    #render text: ''
   end
 
   def vkontakte
@@ -48,4 +65,4 @@ nickname="" urls=#<Hashie::Mash Vkontakte="http://vk.com/mzhomart">> provider="v
     #  redirect_to new_user_registration_url
     #end
   end
-end	
+end 

@@ -1,7 +1,8 @@
 class ProfilesController < ApplicationController
 
 	def edit
-		@profile = current_respondent.profile
+		#@profile = current_respondent.profile
+		render :text=>''
 	end
 
 	def update

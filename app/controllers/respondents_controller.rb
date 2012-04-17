@@ -8,9 +8,9 @@ class RespondentsController < ApplicationController
 		#raise p Respondent.first.slug.inspect
 	    omniauth = session['oa']
 
-		p omniauth.uid
+		p omniauth.uid if omniauth
 
-	    render :text => Respondent.methods - Object.instance_methods
+	    #render :text => Respondent.methods - Object.instance_methods
 	    return
 	end		
 

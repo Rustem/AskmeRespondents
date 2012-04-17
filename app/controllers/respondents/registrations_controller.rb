@@ -9,7 +9,7 @@ class Respondents::RegistrationsController < Devise::RegistrationsController
 
   def create_default_profile
   	# default profile empty
-    current_respondent.profile = self.populate_default_user_profile if current_respondent
+    current_respondent.profile = self.class.populate_default_user_profile if current_respondent
   end  	
 
   def create_slug
@@ -21,17 +21,17 @@ class Respondents::RegistrationsController < Devise::RegistrationsController
     end
   end  	
 
+  self.def populate_default_user_profile
+    profile = Profile.new()
+    profile.social_demographic = SocialDemographic.new(:parameters=> {})
+    profile.business = Business.new(:parameters => {})
+    profile.map_of_wishes = MapOfWishes.new(:parameters => {})
+
+    profile
+  end
+
    protected
 	  def after_sign_up_path_for(resource)
 	    pr_edit_path
 	  end
-
-    def populate_default_user_profile
-      profile = Profile.new()
-      profile.social_demographic = SocialDemographic.new(:parameters=> {})
-      profile.business = Business.new(:parameters => {})
-      profile.map_of_wishes = MapOfWishes.new(:parameters => {})
-
-      profile
-    end
 end	
