@@ -16,6 +16,9 @@ class Respondent
 
   key :slug, String
 
+  # omniauthable fields
+  key :omniauth, Array
+
   # trackable
   key :sign_in_count, Integer, :default => 0
   key :current_sign_in_at, Time
@@ -32,7 +35,7 @@ class Respondent
   #associations
   one :profile, :dependent => :destroy
 
-  attr_accessible :username, :email, :password, :password_confirmation, :created_at, :updated_at, :slug
+  attr_accessible :username, :email, :password, :password_confirmation, :created_at, :updated_at, :slug, :omniauth
 
   validates_presence_of  :email
   validates_uniqueness_of :email
@@ -41,18 +44,26 @@ class Respondent
     where(:slug => slug).first
   }
 
+  scope :find_by_provider_and_uid, lambda { |provider, uid|
+    #if provider.to_ == :facebook
+    where(:omniauth => {:provider=>provider, :uid=>uid})
+  }
+
+
   def convert_to_slug(emailPrefix)
      if defined?(ActiveSupport::Inflector.parameterize)
        ActiveSupport::Inflector.parameterize(emailPrefix).to_s
      end       
-     emailPrefix.downcase.gsub!(/[\W]/, '_') {|match| emailPrefix = match}
-  end    
+     emailPrefix.downcase.gsub(/[\W]/, '_') {|match| emailPrefix = match}
+  end
+
 # correct objectResp is not Enumerable
   def generate_slug
     return if self.email.blank?
     tail, int = "", 1
     a = self.email.split('@')
     initial = convert_to_slug(a[0])
+    p a, a[0], initial
     
     while Respondent.find_by_slug(initial + tail)
          int  += 1

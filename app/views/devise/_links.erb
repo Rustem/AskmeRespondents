@@ -3,6 +3,13 @@
 <% end -%>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+
+	<%- if devise_mapping.omniauthable? and true %>
+	  <%- resource_class.omniauth_providers.each do |provider| %>
+	    <%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %><br />
+	  <% end -%>
+	<% end -%>
+
     <%#= link_to "Sign in with Vkontakte", "/auth/vkontakte" %><br/>
     <%= link_to "Sign up", new_registration_path(resource_name) %><br />
 <% end -%>
@@ -19,7 +26,7 @@
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 <% end -%>
 
-<%- if devise_mapping.omniauthable? %>
+<%- if devise_mapping.omniauthable? and false %>
   <%- resource_class.omniauth_providers.each do |provider| %>
     <%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %><br />
   <% end -%>

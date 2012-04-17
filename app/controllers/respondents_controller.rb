@@ -5,9 +5,13 @@ class RespondentsController < ApplicationController
 		@users = Respondent.all
 
 		omniauth = request.env["omniauth.auth"]
-		log omniauth.nil?
 		#raise p Respondent.first.slug.inspect
+	    omniauth = session['oa']
 
+		p omniauth.uid
+
+	    render :text => Respondent.methods - Object.instance_methods
+	    return
 	end		
 
 	def new

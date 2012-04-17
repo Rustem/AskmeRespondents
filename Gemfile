@@ -28,7 +28,12 @@ end
 
 gem 'jquery-rails'
 
+
+gem 'omniauth-openid'
+gem 'omniauth-facebook'
 gem 'omniauth-vkontakte'
+#gem 'oa-mailru'
+
 
 # mongo and ORM and bson
 gem 'mongo'
