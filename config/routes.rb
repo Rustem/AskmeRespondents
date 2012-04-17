@@ -2,7 +2,9 @@ AskmeModel::Application.routes.draw do
   root :to => 'respondents#index'
 
   devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations", :omniauth_callbacks => "respondents/omniauth_callbacks" }
+  devise_for :responds, :controller => "fake_questions"
 
+  match 'profile' => 'respondents#show'
   #match '/:slug' => 'respondents#show'
   match 'profile/edit/' => 'respondents#edit#:id', :as => "pr_edit"
 
@@ -13,12 +15,12 @@ AskmeModel::Application.routes.draw do
         post 'business_settings', :as => :business
       end          
     end
-  end    
+  end
 
+  #this is just for testing, need to be delete'
+  match 'submitAnswers' => 'fakeQuestions#submitAnswers', :as => 'sa'
 
-  match 'profile' => 'respondents#show'
-
-
+  resources :surveys
 
 
   # The priority is based upon order of creation:

@@ -1,0 +1,13 @@
+<h1><%= @surveyTitle %></h1>
+<%= form_tag(sa_path) do %>
+	<% @questionList.each do |question| %>
+		<p>
+			<h6><%= question[:title] %></h6>
+			<% question[:answers].each do |answer| %>
+				<input type="radio" name="q_<%= question[:id] %>" value="<%= answer.to_s %>" /><%= answer.to_s %><br />
+			<% end %>
+		</p>
+	<% end %>
+
+	<%= button_to 'submit' %>
+<% end %>
