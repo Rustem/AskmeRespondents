@@ -1,0 +1,27 @@
+# CONFIG IS USELESS.
+# look at initializers/devise.rb
+# http://vk.com/editapp?id=2902919
+# https://developers.facebook.com/apps/360921800611149/summary
+
+development: &defaults
+  :vkontakte:
+    :app_id: '2902919'
+    :app_secret: 'bxqlfrVpFqwOUEKrneIf'
+    :app_permissions: 'notify,wall,offline'
+  :facebook:
+    :app_id: '360921800611149'
+    :app_secret: 'f0cc3ebf6b0cfaf936b3dd42773545da'
+    :app_permissions: 'email,user_about_me,user_birthday,user_education_history,user_hometown,user_interests,user_likes,user_location,user_religion_politics,user_relationships'
+
+test:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  #:vkontakte:
+    #:app_id: 2222222
+    #:app_secret: 22222222222222222222
+    #:app_permissions: "notify,wall,offline"
