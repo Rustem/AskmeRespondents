@@ -1,0 +1,93 @@
+<% curpage = curpage.to_i == 0 ? 1 : curpage.to_i %>
+<div class="">
+			<h3>Выберите шаблон</h3>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="three columns">
+					
+						<div class="palette">
+							<!--Если вдруг экран окажется совсем маленьким, то нужно добавлять полосу прокрутки. Примерно то же самое для айпада. Как вариант можно сделать раскрывающееся меню под вопросами-->
+							<%= form.submit "Сохранить", :class=>'nice radius button' %>
+							
+							<!-- hidden input передаёт текущую страницу -->
+							<input type="hidden" name="pagenumber" value="<%= curpage %>" />
+
+							<h5 style="padding-top: 1.5em;">Инструменты</h5>
+							<hr />
+							<a href="#">Демографические данные</a>
+							<hr />
+							<ul>
+								<!--Отсортировано по частоте использования-->
+								<li><%= link_to 'Multiple Choice Question', new_survey_page_question_path(s, s.pages[curpage-1], :code=>'mc') %></li>
+								<li><a href="#">Несколько вариантов ответа</a></li>
+								<li><a href="#">Открытый вопрос</a></li>
+								<li><a href="#">Матрица</a></li>
+								<li><a href="#">Оценка</a></li>
+							</ul>
+							<hr />
+							<ul>
+								<!--Отсортировано по алфавиту, потому что нестандартные поля, не так часто используются-->
+								<li><a href="#">Дата и время</a></li>
+								<li><a href="#">Изображение</a></li>
+								<li><a href="#">Ссылка</a></li>
+								<li><a href="#">Текст</a></li>
+								<li><a href="#">Числа</a></li>
+							</ul>
+							<hr />
+							<a href="#">Логика пропуска</a>
+						</div>
+						
+					
+					</div>
+					<div class="nine columns">
+						<!--Добавление страницы, предпросмотр-->
+						<div style="background-color: #f4f4f4; padding: 0.5em 1em 0; margin-bottom: 1em;">
+							
+							<div class="row">
+								<div class="four columns">
+									<%= link_to '+ Добавить страницу', new_survey_page_path(s.id), :class=>"white small radius button" %>
+									<!-- <a href="#" class="white small radius button">+ Добавить страницу</a> -->
+								</div>
+								<div class="five columns">
+									<!--Если слишком много страниц, то стоит добавить дропдаун-->
+									<%= render 'paginator', :s => s, :pagenumber => curpage %>
+								</div>
+								<div class="three columns" style="text-align: right;"><a href="#" class="small white nice radius button">Предпросмотр</a></div>
+							</div>
+						
+						</div>
+						<!-- page content -->
+						<div style="background-color: #f4f4f4; padding: 0.5em 1em 0; margin-bottom: 1em;">
+							<%= render 'view_page', :page=>s.pages[curpage-1] if s.pages[curpage-1] %>
+						</div>
+						<!--Добавление страницы, предпросмотр-->
+						<div style="background-color: #f4f4f4; padding: 0.5em 1em 0; margin-bottom: 1em;">
+							
+							<div class="row">
+								<div class="four columns">
+									<a href="#" class="white small radius button">+ Добавить страницу</a>
+								</div>
+								<div class="five columns">
+									<!--Если слишком много страниц, то стоит добавить дропдаун-->
+									<%#= render 'paginator', :s => s, :pagenumber => curpage %>
+								</div>
+								<div class="three columns" style="text-align: right;"><a href="#" class="small white nice radius button">Предпросмотр</a></div>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+				
+				<hr/>
+				<div class="row">
+					<div class="four columns">
+						<a href="#" class="small white radius button">Отмена</a>
+					</div>
+					<div class="four columns" style="text-align: center;">
+						<a href="#" class="nice radius button">Сохранить</a>
+					</div>
+					<div class="four columns" style="text-align: right;">
+						<a href="#" class="small white radius button">К оформлению&nbsp;<i class="icon">▶</i></a>
+					</div>
+				</div>

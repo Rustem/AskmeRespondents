@@ -4,8 +4,8 @@ AskmeModel::Application.routes.draw do
   devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations", :omniauth_callbacks => "respondents/omniauth_callbacks" }
   devise_for :responds, :controller => "fake_questions"
 
+  # profile 
   match 'profile' => 'respondents#show'
-  #match '/:slug' => 'respondents#show'
   match 'profile/edit/' => 'respondents#edit#:id', :as => "pr_edit"
 
   resources :respondents do
@@ -17,11 +17,19 @@ AskmeModel::Application.routes.draw do
     end
   end
 
+  #survey construction
+  match 'surveys/:id/edit/page/:pagenumber' => 'surveys#edit#:id', :as => "survey_edit_page"
+
   #this is just for testing, need to be delete'
   match 'submitAnswers' => 'fakeQuestions#submitAnswers', :as => 'sa'
 
-  resources :surveys
-
+  resources :surveys do
+    resources :pages do
+      resources :questions do 
+        
+      end
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

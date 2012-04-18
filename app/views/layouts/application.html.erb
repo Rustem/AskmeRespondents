@@ -5,6 +5,37 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+ <script type="text/javascript">
+  	jQuery(document).ready(function ($) {
+   // code here
+   		var page = <%= @curPage.nil? ? 0 : @curPage %>;
+	  	if(page && <%= @actTab.nil? ? false : @actTab %>) {
+	  		activateTab($('a[href=#simple2]'));
+	  	}
+
+	  	var new_record = <%= @survey.new_record? %>;
+  		window.is_new_record = new_record;
+  		function activateTab($tab) {
+  			if (new_record) {
+				alert("You should save your survey!")
+				return false;
+			}
+			var $activeTab = $tab.closest('dl').find('a.active');
+			var contentLocation = $tab.attr("href") + 'Tab';
+			
+			// Strip off the current url that IE adds
+			contentLocation = contentLocation.replace(/^.+#/, '#');
+			//Make Tab Active
+			$activeTab.removeClass('active');
+			$tab.addClass('active');
+
+	    //Show Tab Content
+			$(contentLocation).closest('.tabs-content').children('li').hide();
+			$(contentLocation).css('display', 'block');
+		}
+
+	});
+  </script>
 </head>
 <body>
 
@@ -28,6 +59,6 @@
 			<div class="twelve columns"><%= yield %></div>
 		</div>
 	</div>
-
+ 
 </body>
 </html>

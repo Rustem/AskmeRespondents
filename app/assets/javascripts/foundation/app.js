@@ -5,14 +5,17 @@ jQuery(document).ready(function ($) {
 
 	/* TABS --------------------------------- */
 	/* Remove if you don't need :) */
-
+	
 	function activateTab($tab) {
-		var $activeTab = $tab.closest('dl').find('a.active'),
-				contentLocation = $tab.attr("href") + 'Tab';
-				
+		if (window.is_new_record) {
+			alert("You should save your survey!")
+			return false;
+		}
+		var $activeTab = $tab.closest('dl').find('a.active');
+		var contentLocation = $tab.attr("href") + 'Tab';
+		
 		// Strip off the current url that IE adds
 		contentLocation = contentLocation.replace(/^.+#/, '#');
-
 		//Make Tab Active
 		$activeTab.removeClass('active');
 		$tab.addClass('active');
@@ -29,7 +32,6 @@ jQuery(document).ready(function ($) {
 			activateTab($(this));
 		});
 	});
-
 	if (window.location.hash) {
 		activateTab($('a[href="' + window.location.hash + '"]'));
 		$.foundation.customForms.appendCustomMarkup();
@@ -91,7 +93,9 @@ jQuery(document).ready(function ($) {
     })
   }
 
-
+  $('.unavailable a, .current a').click(function() {
+  	return false;
+  });
 	/* DISABLED BUTTONS ------------- */
 	/* Gives elements with a class of 'disabled' a return: false; */
   

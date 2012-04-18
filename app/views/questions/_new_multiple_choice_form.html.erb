@@ -1,0 +1,8 @@
+<div class="t-modal__body">
+	<%= f.label "Row answers" %>
+	<%= f.text_area :answer_object, :class=>"large", :placeholder=>"Enter each answer on a separate line" %>
+	<%= f.hidden_field :code, :value=>'mc' %>
+	<!-- <label for="js-answers">Варианты строк:</label>
+	<textarea class="large" name="js-answers" id="js-answers" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea> -->
+<!-- <label for="js-options--required"><input type="checkbox" id="js-options--required"/>  Ответ на этот вопрос обязателен?</label> -->
+</div>

@@ -9,3 +9,4 @@ class ApplicationController < ActionController::Base
   	@noheader = true
   end
 end
+

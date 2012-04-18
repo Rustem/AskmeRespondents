@@ -16,7 +16,7 @@ class Respondents::RegistrationsController < Devise::RegistrationsController
     if current_respondent && current_respondent.set(:slug => current_respondent.generate_slug)
       current_respondent.reload
     else 
-      set_flash_message :notice, :"Sorry, can't update your settings, you are not allowed to register!" 
+      set_flash_message :notice, :signed_up_but_cannot_update_slug
     end
   end  	
 
