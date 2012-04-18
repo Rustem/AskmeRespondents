@@ -36,16 +36,22 @@ class Respondents::OmniauthCallbacksController < Devise::OmniauthCallbacksContro
     # You need to implement the method below in your model
     omniauth = request.env["omniauth.auth"]
 
-    session['oa'] = omniauth if session['oa'].nil?
-    omniauth = session['oa']
+    provider = omniauth.provider.to_s
+    uid = omniauth.uid.to_s
 
-    p omniauth
+    r = Respondent.find_by_provider_and_uid(provider, uid)
 
-    render :text => omniauth.uid.to_s+' '+omniauth.extra.domain.to_s+' '+omniauth.provider.to_s
-    return
+    render :text => 'not implemented'
+    #if @user.persisted?
+    #  flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
+    #  sign_in_and_redirect @user, :event => :authentication
+    #else
+    #  session["devise.facebook_data"] = request.env["omniauth.auth"]
+    #  redirect_to new_user_registration_url
+    #end
+  end
 
-    #@user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
-    <<-HD_COMMENT
+      <<-HD_COMMENT
         :raw_info => {
           :id => '1234567',
           :name => 'Joe Bloggs',
@@ -67,12 +73,4 @@ class Respondents::OmniauthCallbacksController < Devise::OmniauthCallbacksContro
           :updated_time => "2012-04-17T06:58:03+0000"
         }
     HD_COMMENT
-    #if @user.persisted?
-    #  flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
-    #  sign_in_and_redirect @user, :event => :authentication
-    #else
-    #  session["devise.facebook_data"] = request.env["omniauth.auth"]
-    #  redirect_to new_user_registration_url
-    #end
-  end
 end 

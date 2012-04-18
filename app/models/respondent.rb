@@ -173,3 +173,9 @@ class String
     empty? || self.strip.length == 0 ? nil : self
   end
 end
+
+class NilClass
+  def method_missing(method, *args, &block)
+    nil
+  end
+end
