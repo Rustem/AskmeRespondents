@@ -11,12 +11,13 @@ AskmeModel::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  
+  # authentication
   devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations" }
   devise_for :responds, :controller => "fake_questions"
 
+  # profile 
   match 'profile' => 'respondents#show'
-  #match '/:slug' => 'respondents#show'
   match 'profile/edit/' => 'respondents#edit#:id', :as => "pr_edit"
 
   resources :respondents do
@@ -28,12 +29,21 @@ AskmeModel::Application.routes.draw do
     end
   end
 
-
+  #survey construction
+  match 'surveys/:id/edit/page/:pagenumber' => 'surveys#edit#:id', :as => "survey_edit_page"
 
 #this is just for testing, need to be delete'
   match 'submitAnswers' => 'fakeQuestions#submitAnswers', :as => 'sa'
 
-resources :surveys
+resources :surveys do
+  resources :pages do
+    resources :questions do 
+      
+    end
+  end
+end
+
+
 
   # Sample resource route with options:
   #   resources :products do
@@ -72,7 +82,7 @@ resources :surveys
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
 
-  root :to => 'application#index'
+  root :to => 'surveys#new'
  
   # match '/signin' => 
   # See how all your routes lay out with "rake routes"

@@ -1,6 +1,9 @@
 class Question
   include MongoMapper::Document
-
+  
+  connection(Mongo::Connection.new('localhost', 27017))
+  set_database_name "surveys-#{Rails.env}"
+  
   key :title, String
   key :question_number, Integer
 
@@ -9,6 +12,10 @@ class Question
   # generic settings
   key :help_text, String
   
+  
   belongs_to :page
-  one :question_type, :question_settings
+  
+  one :question_type, :polymorphic => true 
+  #one :question_setting
+
 end

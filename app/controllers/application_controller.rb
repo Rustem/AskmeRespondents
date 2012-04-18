@@ -4,4 +4,6 @@ class ApplicationController < ActionController::Base
   def index
   	@noheader = true
   end
+
+  
 end

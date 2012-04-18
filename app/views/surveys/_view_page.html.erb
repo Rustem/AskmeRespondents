@@ -1,0 +1,11 @@
+<div class="row">
+	<div class="four columns">
+		<h3><%= page.title %></h3>
+	</div>
+	<div class="five columns">
+		<p class="nice"> <%= page.description %> very very long descirption of not so interesting page because lorem ipsum dolor cit amit </p>
+	</div>
+	<div class="three columns" style="text-align: right;">
+		<%= link_to 'Edit Page', edit_survey_page_path(page.survey, page), :class=> 'small green nice radius button' %>
+	</div>
+</div>

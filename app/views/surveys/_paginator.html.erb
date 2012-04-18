@@ -1,0 +1,54 @@
+<!-- unavailable: current_item, if current_item = start then unavailable start_link -->
+<!-- unavailable: current_item, if current_item = end then unavailable end_link -->
+<!-- current is curPage -->
+<!-- two parameters: pages, pagenumber -->
+<% pages = s.pages %>
+<% pagenumber = pagenumber.to_i %>
+
+<ul class="pagination" style="margin-bottom: 0;">
+	  <% if pagenumber == 1 %>
+	  	<li class="unavailable"><a href="#">&laquo;</a></li>
+ 	  <% else %>
+ 	  	<li><%= link_to '&laquo;'.html_safe , survey_edit_page_path(s, pagenumber-1) %></li>
+	  <% end %>
+	  <!-- 1... -->
+	  <% if pagenumber-3 > 1 %>
+	  	<li><%= link_to '1', survey_edit_page_path(s, 1) %></li>
+	  	<li class="unavailable"><a href="#">&hellip;</a></li>
+	  	<li><%= link_to pagenumber-2, survey_edit_page_path(s, pagenumber-2) %></li>
+	  	<li><%= link_to pagenumber-1, survey_edit_page_path(s, pagenumber-1) %></li>
+	  <% else %>
+	  	 <% (1...pagenumber).each do |num| %>
+	  		<li><%= link_to num, survey_edit_page_path(s, num) %></li>
+	  	 <% end %>
+	  <% end %>
+	  
+
+	  <!-- cur pages -->
+	  <% if s.new_record? %>
+	  	<li class="unavailable"><a href="#">1</a></li>
+	  <% else %>
+	  	<li class="current"><%= link_to pagenumber, survey_edit_page_path(s, pagenumber) %></li>
+	  <% end %>
+	  
+	  
+	    
+	  <% if pagenumber + 3 < pages.length %>
+	  	<!-- after cur page -->
+	    <li><%= link_to pagenumber+1, survey_edit_page_path(s, pagenumber+1) %></li>
+	    <li><%= link_to pagenumber+2, survey_edit_page_path(s, pagenumber+2) %></li>
+	     
+	  	<li class="unavailable"><a href="#">&hellip;</a></li>
+	    <li><%= link_to pages.length, survey_edit_page_path(s, pages.length) %></li>
+	  <% else %>
+	  	 <% (pagenumber+1..pages.length).each do |num| %>
+	  		  <li><%= link_to num, survey_edit_page_path(s, num) %></li>
+	  	 <% end %>
+	  <% end %>
+
+	  <% if pagenumber == pages.length %>
+	  	<li class="unavailable"><a href="">&raquo;</a></li>
+ 	  <% else %>
+ 	    <li><%= link_to '&raquo;'.html_safe, survey_edit_page_path(s, pagenumber+1) %></li>
+ 	  <% end %>
+</ul>

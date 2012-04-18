@@ -1,0 +1,19 @@
+<h3> New Question </h3>
+<%= form_for([@survey, @page, @question], :question_type => @question.question_type) do |f| %>
+	<%= f.label :title %>
+	<%= f.text_field :title %>
+
+	<%= f.label :help_text %>
+	<%= f.text_field :help_text %>
+
+	<%= render @render_question_type, :f => f %>
+
+	<div class="row">
+		<div class="five columns">
+			<div class="two columns"><%= f.submit "Apply", :class=>"small nice radius button js-modal--apply" %></div>
+			<div class="three columns" style="text-align: right;">
+				<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+			</div>
+		</div>
+	</div>
+<% end %>

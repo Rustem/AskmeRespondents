@@ -1,0 +1,18 @@
+<%= form_for([@survey, @page], :html => { :class=>'nice' }) do |f| %>
+
+  <div class="field">
+    <%= f.label :title, :style=>'font-weight:bold' %><br />
+    <%= f.text_field :title, :class=>'input-text' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description, :style=>'font-weight:bold' %><br />
+    <%= f.text_area :description, :class=>'large' %>
+  </div>
+  <input type="hidden" name="pagenumber" value="<%= @survey.pages.length + 1 %>" />
+
+  <div class="actions">
+    <%= f.submit(:class=>'medium nice blue radius button') %>
+  </div>
+
+<% end %>
