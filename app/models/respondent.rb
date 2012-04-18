@@ -49,13 +49,17 @@ class Respondent
   }
 
   def include_omniauth(omniauth)
-    self.omniauth.select{|o| o['provider']==omniauth.provider and o['uid']==omniauth.uid}.count == 1
+    self.omniauth.select{|o| o['provider']==omniauth.provider and o['uid']==omniauth.uid }.count == 1
   end
 
+  def linked?(provider)
+    self.omniauth.select{|o| o['provider']==provider.to_s }.count == 1
+  end
 
   def update_omniauth(omniauth)
     # adding omniauth
-    self.omniauth << {provider: omniauth.provider, uid: omniauth.uid} unless self.include_omniauth omniauth
+    self.omniauth.select! {|o| o['provider']!=omniauth.provider }
+    self.omniauth << {provider: omniauth.provider, uid: omniauth.uid}
 
     # try to guess username
     if Respondent.where(username: omniauth.extra.raw_info.username.downcase).count == 0

@@ -39,7 +39,28 @@ class Respondents::OmniauthCallbacksController < Devise::OmniauthCallbacksContro
     provider = omniauth.provider.to_s
     uid = omniauth.uid.to_s
 
-    r = Respondent.find_by_provider_and_uid(provider, uid)
+    r = Respondent.find_by_provider_and_uid(provider, uid).first
+
+    if !current_respondent
+      # if not signed in, try to sign in
+
+      if !r
+        render :text => 'You are not registered' and return
+      else
+        # sign in
+        sign_in(:respondent, r) and redirect_to profile_path and return
+      end
+    else
+      # if signed, try to link
+
+      if !r
+        # if not linked
+        current_respondent.update_omniauth omniauth
+        redirect_to profile_path and return
+      end
+    end
+
+    p r
 
     render :text => 'not implemented'
     #if @user.persisted?
