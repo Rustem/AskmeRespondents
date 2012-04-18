@@ -18,9 +18,9 @@
   	<%= f.submit "Sign up" %>
   </div>
 <% end %>
-<div>
-	<%= button_to('Connect vkontakte.ru', 'vkontakte_welcome_path')  %>
-	<%= button_to('Connect facebook', 'facebook_welcome_path') %>
-	<%= button_to('Linked in', 'linkedin_welcome_path') %>
-</div>
+
+<p>
+  <%= link_to "Sign up with Facebook", omniauth_authorize_path(resource_name, :facebook) %><br />
+</p>
+
 <%= render "links" %>

@@ -6,6 +6,13 @@
 <p><b>City: </b> <%= @respondent.city %></p>
 <p><b>Phone number: </b> <%= @respondent.phone_number %></p>
 
+<p>
+  <%= link_to "Link to Vkontakte", omniauth_authorize_path(:respondent, :vkontakte) unless @respondent.linked? :vkontakte%>
+  <%= link_to "UnLink Vkontakte", omniauth_authorize_path(:respondent, :vkontakte) if @respondent.linked? :vkontakte%><br />
+  <%= link_to "Link to Facebook", omniauth_authorize_path(:respondent, :facebook) unless @respondent.linked? :facebook %>
+  <%= link_to "UnLink Facebook", omniauth_authorize_path(:respondent, :facebook) if @respondent.linked? :facebook %><br />
+</p>
+
 <%= #link_to 'Edit me', edit_respondent_path(current_respondent.id) 
 	link_to 'Edit me', pr_edit_path
 %>

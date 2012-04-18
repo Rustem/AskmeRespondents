@@ -1,8 +1,17 @@
 class RespondentsController < ApplicationController
 	before_filter :authenticate_respondent!, :except => [:index]
+
 	def index
 		@users = Respondent.all
+
+		omniauth = request.env["omniauth.auth"]
 		#raise p Respondent.first.slug.inspect
+	    omniauth = session['oa']
+
+			p omniauth.uid if omniauth
+
+	    #render :text => Respondent.methods - Object.instance_methods
+	    return
 	end		
 
 	def new

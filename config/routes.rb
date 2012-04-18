@@ -1,19 +1,7 @@
 AskmeModel::Application.routes.draw do
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
+  root :to => 'respondents#index'
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  
-  # authentication
-  devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations" }
+  devise_for :respondents, :controllers => { :sessions => "respondents/sessions", :registrations => "respondents/registrations", :omniauth_callbacks => "respondents/omniauth_callbacks" }
   devise_for :responds, :controller => "fake_questions"
 
   # profile 
@@ -32,18 +20,30 @@ AskmeModel::Application.routes.draw do
   #survey construction
   match 'surveys/:id/edit/page/:pagenumber' => 'surveys#edit#:id', :as => "survey_edit_page"
 
-#this is just for testing, need to be delete'
+  #this is just for testing, need to be delete'
   match 'submitAnswers' => 'fakeQuestions#submitAnswers', :as => 'sa'
 
-resources :surveys do
-  resources :pages do
-    resources :questions do 
-      
+  resources :surveys do
+    resources :pages do
+      resources :questions do 
+        
+      end
     end
   end
-end
 
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
 
+  # Sample of regular route:
+  #   match 'products/:id' => 'catalog#view'
+  # Keep in mind you can assign values other than :controller and :action
+
+  # Sample of named route:
+  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+  # This route can be invoked with purchase_url(:id => product.id)
+
+  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  #   resources :products
 
   # Sample resource route with options:
   #   resources :products do
@@ -82,7 +82,6 @@ end
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
 
-  root :to => 'surveys#new'
  
   # match '/signin' => 
   # See how all your routes lay out with "rake routes"
@@ -90,5 +89,4 @@ end
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
- 
 end
