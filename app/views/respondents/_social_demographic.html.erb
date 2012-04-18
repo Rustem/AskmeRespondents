@@ -6,7 +6,11 @@
         <label>age </label>
         <input type='text' name="social_demographic[age]" value="<%= @profile.social_demographic.parameters['age'] %>"/><br />
         <label>race </label>
-        <input type='text' name="social_demographic[race]" value="<%= @profile.social_demographic.parameters['race'] %>"/>
+        <input type='text' name="social_demographic[race]" value="<%= @profile.social_demographic.parameters['race'] %>"/><br />
+        <label>gender </label>
+        <input type='text' name="social_demographic[gender]" value="<%= @profile.social_demographic.parameters['gender'] %>"/><br />
+        <label>religion </label>
+        <input type='text' name="social_demographic[religion]" value="<%= @profile.social_demographic.parameters['religion'] %>"/>
      
   <p>
     <%= button_to 'submit' %>

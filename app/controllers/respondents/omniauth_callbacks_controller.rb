@@ -14,14 +14,17 @@ class Respondents::OmniauthCallbacksController < Devise::OmniauthCallbacksContro
       end
 
       # update user profile
-      #r.update_omniauth omniauth
+      r.update_omniauth omniauth
 
       sign_in(:respondent, r) and redirect_to pr_edit_path
     else
       # respondent should SIGN UP
 
       r = Respondent.create(email: email, password: SecureRandom.base64(12))
-      #r.update_omniauth omniauth
+      r.profile = Respondents::RegistrationsController.populate_default_user_profile
+      r.save!
+
+      r.update_omniauth omniauth
 
       sign_in(:respondent, r) and redirect_to pr_edit_path
     end
@@ -43,19 +46,26 @@ class Respondents::OmniauthCallbacksController < Devise::OmniauthCallbacksContro
 
     #@user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
     <<-HD_COMMENT
-#<OmniAuth::AuthHash credentials=#<Hashie::Mash expires=true expires_at=1334548991 
-token="14e258fb14928098149280985214becb1f114921493808a85a4db0752d9c5b6"> 
-extra=#<Hashie::Mash raw_info=#<Hashie::Mash bdate="23.2.1991" 
-city="183" country="4" domain="mzhomart" 
-first_name="Zhomart" 
-last_name="Mukhamejanov" nickname="" 
-online=0 photo="http://cs5324.userapi.com/u7395427/e_3aeb4fcb.jpg" 
-photo_big="http://cs5324.userapi.com/u7395427/a_70ce8d7c.jpg" 
-sex=2 uid=7395427>> info=#<OmniAuth::AuthHash::InfoHash 
-first_name="Zhomart" image="http://cs5324.userapi.com/u7395427/e_3aeb4fcb.jpg" 
-last_name="Mukhamejanov"  name="Zhomart Mukhamejanov" 
-nickname="" urls=#<Hashie::Mash Vkontakte="http://vk.com/mzhomart">> provider="vkontakte" uid=7395427>
-
+        :raw_info => {
+          :id => '1234567',
+          :name => 'Joe Bloggs',
+          :first_name => 'Joe',
+          :last_name => 'Bloggs',
+          :link => "http://www.facebook.com/mzhomart",
+          :username => 'jbloggs',
+          :location => { :id => '123456789', :name => 'Palo Alto, California' },
+          :gender => 'male',
+          :email => 'joe@bloggs.com',
+          :timezone => 6,
+          :locale => 'en_US',
+          :verified => true,
+          :updated_time => '2011-11-11T06:21:03+0000',
+          :birthday => "02/23/1991",
+          :education => [#<Hashie::Mash school=#<Hashie::Mash id="110948398932579" name="RSPHMSH, fiz-mat"> type="High School" year=#<Hashie::Mash id="138383069535219" name="2005">>, ...],
+          :languages => [#<Hashie::Mash id="109582215727860" name="Kazakh">, ...],
+          :religion => "Muslim",
+          :updated_time => "2012-04-17T06:58:03+0000"
+        }
     HD_COMMENT
     #if @user.persisted?
     #  flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"

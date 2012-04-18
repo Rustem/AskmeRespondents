@@ -54,17 +54,44 @@ class Respondent
 
 
   def update_omniauth(omniauth)
+    # adding omniauth
     self.omniauth << {provider: omniauth.provider, uid: omniauth.uid} unless self.include_omniauth omniauth
 
-    self.firstname = firstname.to_s.empty_or_self || omniauth.extra.raw_info.first_name || ''
-    self.lastname = lastname.to_s.empty_or_self || omniauth.extra.raw_info.last_name || ''
-    self.city = city.to_s.empty_or_self || omniauth.extra.raw_info.location.name || ''
-
+    # try to guess username
     if Respondent.where(username: omniauth.extra.raw_info.username.downcase).count == 0
-      self.username = username.to_s.empty_or_self || omniauth.extra.raw_info.username.downcase || ''
+      self.username = self.username.to_s.empty_or_self || omniauth.extra.raw_info.username.downcase || ''
     end
 
-    save!
+    self.firstname = self.firstname.to_s.empty_or_self || omniauth.extra.raw_info.first_name || ''
+    self.lastname = self.lastname.to_s.empty_or_self || omniauth.extra.raw_info.last_name || ''
+    self.city = self.city.to_s.empty_or_self || omniauth.extra.raw_info.location.name || ''
+
+
+    # updating Social Demographic
+    sd = self.profile.social_demographic
+    
+    gender = sd.parameters['gender'].to_s.empty_or_self || omniauth.extra.raw_info.gender || ''
+    sd.parameters['gender'] = gender
+
+    religion = sd.parameters['religion'].to_s.empty_or_self || omniauth.extra.raw_info.religion || ''
+    sd.parameters['religion'] = religion
+
+    begin
+      bd = omniauth.extra.raw_info.birthday.split('/')
+      birthday = Time.new(bd[2].to_i, bd[0].to_i, bd[1].to_i)
+      age = ((Time.new - birthday)/(60*60*24*365)).to_i
+    rescue
+      age = nil
+    end
+
+    age = (sd.parameters['age'].to_s.empty_or_self || age || '')
+    sd.parameters['age'] = age
+
+    sd.save!
+
+
+    # saving respondent info
+    self.save!
   end
 
   <<-OMNIAUTH_AUTH_HASH
@@ -93,15 +120,20 @@ class Respondent
           :name => 'Joe Bloggs',
           :first_name => 'Joe',
           :last_name => 'Bloggs',
-          :link => 'http://www.facebook.com/jbloggs',
+          :link => "http://www.facebook.com/mzhomart",
           :username => 'jbloggs',
           :location => { :id => '123456789', :name => 'Palo Alto, California' },
           :gender => 'male',
           :email => 'joe@bloggs.com',
-          :timezone => -8,
+          :timezone => 6,
           :locale => 'en_US',
           :verified => true,
-          :updated_time => '2011-11-11T06:21:03+0000'
+          :updated_time => '2011-11-11T06:21:03+0000',
+          :birthday => "02/23/1991",
+          :education => [#<Hashie::Mash school=#<Hashie::Mash id="110948398932579" name="RSPHMSH, fiz-mat"> type="High School" year=#<Hashie::Mash id="138383069535219" name="2005">>, ...],
+          :languages => [#<Hashie::Mash id="109582215727860" name="Kazakh">, ...],
+          :religion => "Muslim",
+          :updated_time => "2012-04-17T06:58:03+0000"
         }
       }
     }

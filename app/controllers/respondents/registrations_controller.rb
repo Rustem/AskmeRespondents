@@ -13,7 +13,6 @@ class Respondents::RegistrationsController < Devise::RegistrationsController
   end  	
 
   def create_slug
-    p current_respondent
     if current_respondent && current_respondent.set(:slug => current_respondent.generate_slug)
       current_respondent.reload
     else 
@@ -21,12 +20,11 @@ class Respondents::RegistrationsController < Devise::RegistrationsController
     end
   end  	
 
-  self.def populate_default_user_profile
+  def self.populate_default_user_profile
     profile = Profile.new()
     profile.social_demographic = SocialDemographic.new(:parameters=> {})
     profile.business = Business.new(:parameters => {})
     profile.map_of_wishes = MapOfWishes.new(:parameters => {})
-
     profile
   end
 

@@ -1,8 +1,7 @@
 class ProfilesController < ApplicationController
 
 	def edit
-		#@profile = current_respondent.profile
-		render :text=>''
+		@profile = current_respondent.profile
 	end
 
 	def update
@@ -28,14 +27,13 @@ class ProfilesController < ApplicationController
 		profile = current_respondent.profile
 		@sd = profile.social_demographic
 		@respondent = current_respondent
-			#
-			profile.social_demographic.parameters = params[:social_demographic]
-			profile.save
-			#raise p profile.inspect
-			# raise p Respondent.find_by_id(@respondent.id).inspect
-	        redirect_to current_respondent
-	        #format.json { head :no_content }
-	    
+		#
+		profile.social_demographic.parameters = params[:social_demographic]
+		profile.save
+		#raise p profile.inspect
+		# raise p Respondent.find_by_id(@respondent.id).inspect
+    redirect_to current_respondent
+    #format.json { head :no_content }
 	end		
 
 	def business_settings
